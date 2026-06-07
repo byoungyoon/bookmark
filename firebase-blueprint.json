@@ -1,0 +1,40 @@
+{
+  "entities": {
+    "project": {
+      "title": "Project",
+      "description": "A project container for bookmarks.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "description": "Name of the project" },
+        "userId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "userId", "createdAt"]
+    },
+    "bookmark": {
+      "title": "Bookmark",
+      "description": "A bookmark within a project.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "projectId": { "type": "string" },
+        "title": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "userId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "projectId", "title", "url", "userId", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/projects/{projectId}": {
+      "schema": "project",
+      "description": "Projects collection"
+    },
+    "/projects/{projectId}/bookmarks/{bookmarkId}": {
+      "schema": "bookmark",
+      "description": "Bookmarks subcollection"
+    }
+  }
+}

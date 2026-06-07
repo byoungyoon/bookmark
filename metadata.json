@@ -1,0 +1,6 @@
+{
+  "name": "Project Bookmark Dashboard",
+  "description": "A dashboard for managing and sharing project-specific links.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
