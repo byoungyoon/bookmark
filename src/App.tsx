@@ -19,9 +19,7 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('[Auth Log] App mounted. Listening to onAuthStateChanged...');
     return auth.onAuthStateChanged((u) => {
-      console.log('[Auth Log] onAuthStateChanged triggered. User:', u ? u.email : 'null');
       setUser(u);
       setLoading(false);
     });

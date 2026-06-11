@@ -9,28 +9,18 @@ export default function ClickLoginAction() {
   const { loading, setLoading } = useLoginStore();
 
   useEffect(() => {
-    console.log('[Auth Log] ClickLoginAction mounted. URL:', window.location.href);
-    getRedirectResult(auth)
-      .then((result) => {
-        if (result) {
-          console.log('[Auth Log] getRedirectResult successful. User:', result.user.email);
-        } else {
-          console.log('[Auth Log] getRedirectResult returned null (no redirect back detected).');
-        }
-      })
-      .catch((error) => {
-        console.error('[Auth Log] getRedirectResult failed:', error);
-      });
+    getRedirectResult(auth).catch((error) => {
+      console.error(error);
+    });
   }, []);
 
   const handleLogin = async () => {
     if (loading) return;
     setLoading(true);
-    console.log('[Auth Log] Starting signInWithRedirect...');
     try {
       await signInWithRedirect(auth, new GoogleAuthProvider());
     } catch (error) {
-      console.error('[Auth Log] signInWithRedirect error:', error);
+      console.error(error);
       setLoading(false);
     }
   };
