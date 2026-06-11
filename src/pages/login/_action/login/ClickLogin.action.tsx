@@ -1,20 +1,36 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { auth } from '@/src/utils/firebase';
-import { GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithRedirect, getRedirectResult } from 'firebase/auth';
 import { useLoginStore } from '../../state';
 
 export default function ClickLoginAction() {
   const { loading, setLoading } = useLoginStore();
 
+  useEffect(() => {
+    console.log('[Auth Log] ClickLoginAction mounted. URL:', window.location.href);
+    getRedirectResult(auth)
+      .then((result) => {
+        if (result) {
+          console.log('[Auth Log] getRedirectResult successful. User:', result.user.email);
+        } else {
+          console.log('[Auth Log] getRedirectResult returned null (no redirect back detected).');
+        }
+      })
+      .catch((error) => {
+        console.error('[Auth Log] getRedirectResult failed:', error);
+      });
+  }, []);
+
   const handleLogin = async () => {
     if (loading) return;
     setLoading(true);
+    console.log('[Auth Log] Starting signInWithRedirect...');
     try {
       await signInWithRedirect(auth, new GoogleAuthProvider());
     } catch (error) {
-      console.error(error);
+      console.error('[Auth Log] signInWithRedirect error:', error);
       setLoading(false);
     }
   };
