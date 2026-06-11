@@ -2,23 +2,19 @@
 
 import React from 'react';
 import { auth } from '@/src/utils/firebase';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
 import { useLoginStore } from '../../state';
 
 export default function ClickLoginAction() {
-  const navigate = useNavigate();
   const { loading, setLoading } = useLoginStore();
 
   const handleLogin = async () => {
     if (loading) return;
     setLoading(true);
     try {
-      await signInWithPopup(auth, new GoogleAuthProvider());
-      navigate('/');
+      await signInWithRedirect(auth, new GoogleAuthProvider());
     } catch (error) {
       console.error(error);
-    } finally {
       setLoading(false);
     }
   };
